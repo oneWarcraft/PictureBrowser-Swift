@@ -16,6 +16,10 @@ class HomeCollectionViewController: UICollectionViewController
 {
     lazy var shops : [Shop] = [Shop]()
     
+//    var isPresented : Bool  = false
+    
+    lazy var pictureBrowserAnimator : PictureBrowserAnimator = PictureBrowserAnimator()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -101,23 +105,14 @@ extension HomeCollectionViewController {
         pictureBrowser.indexPath = indexPath
         pictureBrowser.shops = shops
         
+//        pictureBrowser.modalTransitionStyle = .PartialCurl
+        pictureBrowser.modalPresentationStyle = .Custom
+        pictureBrowser.transitioningDelegate = pictureBrowserAnimator
+    
         // 3. 弹出控制器
         presentViewController(pictureBrowser, animated: true, completion: nil)
         
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
