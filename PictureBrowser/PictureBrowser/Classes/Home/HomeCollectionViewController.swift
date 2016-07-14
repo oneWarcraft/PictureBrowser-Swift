@@ -91,4 +91,33 @@ extension HomeCollectionViewController {
         return cell
     }
     
+    
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        // 1. 创建图片浏览器控制器
+        let pictureBrowser = PictureBrowserController()
+        
+        // 2. 设置控制器相关属性
+        pictureBrowser.indexPath = indexPath
+        pictureBrowser.shops = shops
+        
+        // 3. 弹出控制器
+        presentViewController(pictureBrowser, animated: true, completion: nil)
+        
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
