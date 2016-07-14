@@ -38,9 +38,9 @@ class PictureBrowserViewCell: UICollectionViewCell {
                 return
             }
             
-            imageView.sd_setImageWithURL(url, placeholderImage: image) { (iamge, _, _, __) -> Void
+            imageView.sd_setImageWithURL(url, placeholderImage: image) { (image, _, _, __) -> Void
                 in
-                self.imageView.frame = self.calculateImageViewFrame(iamge)
+                self.imageView.frame = self.calculateImageViewFrame(image)
             }
 
         }

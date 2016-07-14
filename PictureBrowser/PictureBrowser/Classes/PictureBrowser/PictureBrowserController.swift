@@ -8,7 +8,7 @@
 //
 import UIKit
 
-class PictureBrowserController: UIViewController, UICollectionViewDataSource {
+class PictureBrowserController: UIViewController {
     // MARK: - 定义的属性
     var indexPath : NSIndexPath?
     var shops : [Shop]?
@@ -26,8 +26,13 @@ class PictureBrowserController: UIViewController, UICollectionViewDataSource {
         super.viewDidLoad()
         
 //        view.backgroundColor = UIColor.purpleColor()
-        
+
+        view.frame.size.width += 15
+        // 1.设置UI界面
         setupUI()
+        
+        // 2.滚动到对应的位置
+        collectionView.scrollToItemAtIndexPath(indexPath!, atScrollPosition: .Left, animated: false)
     }
     
 }
@@ -74,30 +79,32 @@ extension PictureBrowserController
     {
         collectionView.dataSource = self
 
-//        collectionView.delegate = self
+        collectionView.delegate = self
         
         collectionView.registerClass(PictureBrowserViewCell.self, forCellWithReuseIdentifier: pictureBrowseCellID)
     }
 }
 
-extension PictureBrowserController
-{
-//    func collectionView(
-}
-
-
 extension PictureBrowserController {
     @objc private func closeBtnClick() {
-        print("closeBtnClick")
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     @objc private func saveBtnClick() {
-        print("saveBtnClick")
+        // 1. 取出当前正在显示的图片
+        let cell = collectionView.visibleCells().first as! PictureBrowserViewCell
+        guard let image = cell.imageView.image else {
+            return
+        }
+        
+        // 2. 保存图片
+        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        
     }
 }
 
 // MARK:- collectionView的数据源和代理方法
-extension PictureBrowserController  {
+extension PictureBrowserController :UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return shops?.count ?? 0
@@ -108,12 +115,16 @@ extension PictureBrowserController  {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(pictureBrowseCellID, forIndexPath: indexPath) as! PictureBrowserViewCell
         
         // 2.设置cell的内容
-        cell.backgroundColor = indexPath.item % 2 == 0 ? UIColor.redColor() : UIColor.blueColor()
+//        cell.backgroundColor = indexPath.item % 2 == 0 ? UIColor.redColor() : UIColor.blueColor()
         
         cell.shop = shops![indexPath.item]
 
         
         return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        closeBtnClick()
     }
 }
 

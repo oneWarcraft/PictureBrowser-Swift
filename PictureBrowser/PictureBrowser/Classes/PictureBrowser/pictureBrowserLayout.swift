@@ -13,7 +13,7 @@ class pictureBrowserLayout: UICollectionViewFlowLayout {
         super.prepareLayout()
         
         // 1. 设置flowLayout的相关属性
-        itemSize = UIScreen.mainScreen().bounds.size
+        itemSize = (collectionView?.bounds.size)!
         minimumLineSpacing = 0.0
         minimumInteritemSpacing = 0.0
         scrollDirection = .Horizontal
