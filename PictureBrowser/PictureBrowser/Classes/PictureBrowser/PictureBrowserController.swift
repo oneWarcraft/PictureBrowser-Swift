@@ -54,7 +54,15 @@ extension PictureBrowserController
     }
     
     func prepareBTN() {
-        
+        setupBtn(closeBtn, title: "关 闭", action: "closeBtnClick")
+        setupBtn(saveBtn, title: "保 存", action: "saveBtnClick")
+    }
+    
+    func setupBtn(btn : UIButton, title : String, action : String) {
+        btn.setTitle(title, forState: .Normal)
+        btn.backgroundColor = UIColor.darkGrayColor()
+        btn.titleLabel?.font = UIFont.systemFontOfSize(14.0)
+        btn.addTarget(self, action: Selector(action), forControlEvents: .TouchUpInside)
     }
     
     func prepareCollectionView() {
@@ -62,7 +70,15 @@ extension PictureBrowserController
     }
 }
 
-
+extension PictureBrowserController {
+    @objc private func closeBtnClick() {
+        print("closeBtnClick")
+    }
+    
+    @objc private func saveBtnClick() {
+        print("saveBtnClick")
+    }
+}
 
 
 
