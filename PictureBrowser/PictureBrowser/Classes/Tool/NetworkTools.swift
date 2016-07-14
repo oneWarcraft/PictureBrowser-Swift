@@ -19,20 +19,30 @@ class NetworkTools: AFHTTPSessionManager {
     }()
     
     
-    func loadHomeData(finishedCallBack: (resultArray : [[String : NSObject]], error : NSError) -> ()) {
+    func loadHomeData(finishedCallBack: (resultArray : [[String : NSObject]]?, error : NSError?) -> ()) {
         // 1. 获取请求的URL
         let urlString = "http://mobapi.meilishuo.com/2.0/twitter/popular.json?offset=0&limit=30&access_token=b92e0c6fd3ca919d3e7547d446d9a8c2"
         
         // 2. 发送网络请求
         GET(urlString, parameters: nil, progress: nil, success: { (_, result) in
-            print(result)
+            
+            // 1.将Anyobject?转换成字典类型
+            guard let resultDict = result as? [String : NSObject] else {
+                print("没有拿到正确的数据")
+                return
+            }
+            
+            // 2. 从字典中将数组取出
+            let dictArray = resultDict["data"] as? [[String : NSObject]]
+            
+            // 3. 将数据回调出去
+            finishedCallBack(resultArray: dictArray, error: nil)
+            
+//            print(result)
             }) { (_, error) in
-                print(error)
+//                print(error)
+                finishedCallBack(resultArray: nil, error: error)
         }
     }
-    
-    
-    
-    
 }
 
