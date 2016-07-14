@@ -16,6 +16,7 @@
 		0C1F05C61D36A78B00BED52E /* HomeCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1F05C51D36A78B00BED52E /* HomeCollectionViewFlowLayout.swift */; };
 		0CF8A43B1D37257F00D56D04 /* NetworkTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF8A43A1D37257F00D56D04 /* NetworkTools.swift */; };
 		0CF8A43D1D37374500D56D04 /* shop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF8A43C1D37374500D56D04 /* shop.swift */; };
+		0CF8A43F1D3738F500D56D04 /* HomeViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF8A43E1D3738F500D56D04 /* HomeViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		0C1F05C51D36A78B00BED52E /* HomeCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		0CF8A43A1D37257F00D56D04 /* NetworkTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTools.swift; sourceTree = "<group>"; };
 		0CF8A43C1D37374500D56D04 /* shop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = shop.swift; sourceTree = "<group>"; };
+		0CF8A43E1D3738F500D56D04 /* HomeViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewCell.swift; sourceTree = "<group>"; };
 		59850F9A614BE965CE99389F /* Pods-PictureBrowser.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PictureBrowser.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PictureBrowser/Pods-PictureBrowser.debug.xcconfig"; sourceTree = "<group>"; };
 		D41F343AF8791995C662C755 /* Pods-PictureBrowser.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PictureBrowser.release.xcconfig"; path = "Pods/Target Support Files/Pods-PictureBrowser/Pods-PictureBrowser.release.xcconfig"; sourceTree = "<group>"; };
 		F7D80A28AD284216CAB25E51 /* Pods_PictureBrowser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PictureBrowser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -93,6 +95,7 @@
 				0C1F05C31D36A77500BED52E /* HomeCollectionViewController.swift */,
 				0C1F05C51D36A78B00BED52E /* HomeCollectionViewFlowLayout.swift */,
 				0CF8A43C1D37374500D56D04 /* shop.swift */,
+				0CF8A43E1D3738F500D56D04 /* HomeViewCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -256,6 +259,7 @@
 				0C1F05AE1D36A56700BED52E /* AppDelegate.swift in Sources */,
 				0C1F05C41D36A77500BED52E /* HomeCollectionViewController.swift in Sources */,
 				0C1F05C61D36A78B00BED52E /* HomeCollectionViewFlowLayout.swift in Sources */,
+				0CF8A43F1D3738F500D56D04 /* HomeViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

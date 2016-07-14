@@ -7,6 +7,6 @@ use_frameworks!
 
 # Pods for PictureBrowser
 pod 'AFNetworking', '~> 3.0'
-
+pod 'SDWebImage'
 
 end

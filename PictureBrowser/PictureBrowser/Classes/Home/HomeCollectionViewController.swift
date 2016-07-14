@@ -12,20 +12,46 @@ import AFNetworking
 
 private let reuseIdentifier = "cellID"
 
-class HomeCollectionViewController: UICollectionViewController {
+class HomeCollectionViewController: UICollectionViewController
+{
+    lazy var shops : [Shop] = [Shop]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 发送网络请求
-        NetworkTools.shareInstance.loadHomeData { (resultArray, error) in
-            
-        }
-        
-        
+        loadData()
+   
     }
 
 
+}
+
+extension HomeCollectionViewController
+{
+    func loadData() {
+        // 发送网络请求
+        NetworkTools.shareInstance.loadHomeData { (resultArray, error) in
+            // 1. 错误校验
+            if error != nil {
+                return
+            }
+            
+            // 2. 取出可选类型中的数据
+            guard let resultArray = resultArray else {
+                return
+            }
+            
+            // 3. 遍历数组,将数据中的字典转换成模型对象
+            for dict in resultArray {
+                let shop = Shop(dict: dict)
+                self.shops.append(shop)
+            }
+            
+            // 4. 刷新表格
+            self.collectionView?.reloadData()
+        }
+    }
+    
 }
 
 /*
@@ -48,17 +74,18 @@ extension NSMutableArray {
 
 extension HomeCollectionViewController {
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 100
+        return shops.count
     }
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         // "HomeCell" cell ID
-        let cell = collectionView .dequeueReusableCellWithReuseIdentifier("HomeCell", forIndexPath: indexPath)
+        let cell = collectionView .dequeueReusableCellWithReuseIdentifier("HomeCell", forIndexPath: indexPath) as! HomeViewCell
         
-        cell.backgroundColor = UIColor.redColor()
+//        cell.backgroundColor = UIColor.redColor()
+        
+        cell.shop = shops[indexPath.row]
         
         return cell
-        
     }
     
 }
