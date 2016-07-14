@@ -104,6 +104,8 @@ extension HomeCollectionViewController {
         // 2. 设置控制器相关属性
         pictureBrowser.indexPath = indexPath
         pictureBrowser.shops = shops
+        pictureBrowserAnimator.indexPath = indexPath
+        pictureBrowserAnimator.presentedDelegate = self
         
 //        pictureBrowser.modalTransitionStyle = .PartialCurl
         pictureBrowser.modalPresentationStyle = .Custom
@@ -114,5 +116,54 @@ extension HomeCollectionViewController {
         
     }
 }
+
+// MARK:- 实现presentedDelegate的代理方法
+extension HomeCollectionViewController : PresentedProtocol {
+    func getImageView(indexPath: NSIndexPath) -> UIImageView {
+        // 1. 创建UIImageView对象
+        let imageView = UIImageView()
+        
+        // 2. 设置图片
+        let cell = collectionView?.cellForItemAtIndexPath(indexPath) as! HomeViewCell
+        imageView.image = cell.imageView.image
+        
+        imageView.contentMode = .ScaleAspectFill
+        imageView.clipsToBounds = true
+        
+        return imageView
+    }
+    
+    func getStartRect(indexPath: NSIndexPath) -> CGRect {
+        
+        let cell = collectionView?.cellForItemAtIndexPath(indexPath) as! HomeViewCell
+        
+        // 将cell的frame转换成所有屏幕的frame
+        let startRect = collectionView!.convertRect(cell.frame, toCoordinateSpace: UIApplication.sharedApplication().keyWindow!)
+        
+        return startRect
+    }
+    
+    func getEndRect(indexPath: NSIndexPath) -> CGRect {
+        //获取当前正在现实的cell
+        let cell = collectionView?.cellForItemAtIndexPath(indexPath) as! HomeViewCell
+        
+        // 获取image对象
+        let image = cell.imageView.image
+        return calculateImageViewFrame(image!)
+        
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 

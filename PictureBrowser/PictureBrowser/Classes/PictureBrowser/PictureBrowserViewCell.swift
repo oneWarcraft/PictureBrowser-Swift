@@ -11,8 +11,7 @@ import SDWebImage
 
 class PictureBrowserViewCell: UICollectionViewCell {
     
-    // MARK:- 懒加载属性
-    lazy var imageView : UIImageView = UIImageView()
+
     
     // MARK:- 定义属性
     var shop : Shop? {
@@ -40,12 +39,14 @@ class PictureBrowserViewCell: UICollectionViewCell {
             
             imageView.sd_setImageWithURL(url, placeholderImage: image) { (image, _, _, __) -> Void
                 in
-                self.imageView.frame = self.calculateImageViewFrame(image)
+                self.imageView.frame = calculateImageViewFrame(image)
             }
 
         }
     }
     
+    // MARK:- 懒加载属性
+    lazy var imageView : UIImageView = UIImageView()
     // MARK:- 构造函数
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -60,16 +61,5 @@ class PictureBrowserViewCell: UICollectionViewCell {
     }
 }
 
-extension PictureBrowserViewCell {
-    // MARK:- 根据图片计算imageView的frame
-    func calculateImageViewFrame(image : UIImage) -> CGRect {
-        let imageViewW = UIScreen.mainScreen().bounds.width
-        let imageViewH = imageViewW / image.size.width * image.size.height
-        let x : CGFloat = 0
-        let y = (UIScreen.mainScreen().bounds.height - imageViewH) * 0.5
-        
-        return CGRect(x: x, y: y, width: imageViewW, height: imageViewH)
-    }
-}
 
 

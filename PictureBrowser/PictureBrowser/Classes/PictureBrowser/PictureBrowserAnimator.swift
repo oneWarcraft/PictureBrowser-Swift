@@ -8,8 +8,17 @@
 
 import UIKit
 
+protocol PresentedProtocol : class {
+    func getImageView(indexPath : NSIndexPath) -> UIImageView
+    func getStartRect(indexPath : NSIndexPath) -> CGRect
+    func getEndRect(indexPath : NSIndexPath) -> CGRect
+}
+
 class PictureBrowserAnimator: NSObject {
     var isPresented : Bool = false
+    var indexPath : NSIndexPath?
+    
+    weak var presentedDelegate : PresentedProtocol?
 }
 
 
@@ -43,19 +52,35 @@ extension PictureBrowserAnimator : UIViewControllerAnimatedTransitioning {
     func animateTransition(transitionContext: UIViewControllerContextTransitioning)
     {
         if isPresented {
+            // 0. nil值校验
+            guard let indexPath = indexPath, presentedDelegate = presentedDelegate else {
+                return
+            }
+            
             // 1.获取弹出的View
             let presentedView = transitionContext.viewForKey(UITransitionContextToViewKey)!
             
-            // 2.将弹出的View添加到containerView中
-            transitionContext.containerView()?.addSubview(presentedView)
+//            // 2.将弹出的View添加到containerView中
+//            transitionContext.containerView()?.addSubview(presentedView)
             
             // 3.执行动画
-            presentedView.alpha = 0.0
-            let duration = transitionDuration(transitionContext)
-            UIView.animateWithDuration(duration, animations: { () -> Void in
-                presentedView.alpha = 1.0
-            }) {
-                (_) -> Void in
+            // 3.1 获取执行动画的imageView
+            let imageView = presentedDelegate.getImageView(indexPath)
+            transitionContext.containerView()?.addSubview(imageView)
+            
+            // 3.2 设置ImageViw的起始位置
+            imageView.frame = presentedDelegate.getStartRect(indexPath)
+            
+            // 3.3 执行动画
+            transitionContext.containerView()?.backgroundColor = UIColor.blackColor()
+            
+            UIView.animateWithDuration(transitionDuration(transitionContext), animations: { () -> Void in
+                imageView.frame = presentedDelegate.getEndRect(indexPath)
+                }) { (_) -> Void in
+                // 2. 将弹出的View添加到containerView中
+                transitionContext.containerView()?.addSubview(presentedView)
+                transitionContext.containerView()?.backgroundColor = UIColor.clearColor()
+                imageView.removeFromSuperview()
                 transitionContext.completeTransition(true)
             }
             
