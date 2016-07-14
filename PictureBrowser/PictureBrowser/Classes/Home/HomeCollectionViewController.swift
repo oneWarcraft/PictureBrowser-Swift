@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AFNetworking
+
 
 private let reuseIdentifier = "cellID"
 
@@ -14,10 +16,35 @@ class HomeCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // 发送网络请求
+        NetworkTools.shareInstance.loadHomeData { (resultArray, error) in
+            
+        }
+        
+        
     }
-    
+
+
 }
 
+/*
+//原则上不要在extension里override方法
+extension NSMutableArray {
+    
+    public override func descriptionWithLocale(locale: AnyObject?) -> String {
+        var str = "(\n"
+        
+        [self .enumerateObjectsUsingBlock({
+            str += "\t\($0.0), \n"
+        })]
+        
+        str += ")"
+        
+        return str
+    }
+}
+*/
 
 extension HomeCollectionViewController {
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
