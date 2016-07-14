@@ -26,7 +26,6 @@ class HomeCollectionViewController: UICollectionViewController
         loadData(0)
     }
 
-
 }
 
 extension HomeCollectionViewController

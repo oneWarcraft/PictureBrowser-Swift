@@ -14,7 +14,7 @@ class HomeCollectionViewFlowLayout: UICollectionViewFlowLayout {
         super.prepareLayout()
         
         let margin : CGFloat = 10
-        let itemWH = (UIScreen.mainScreen().bounds.width - 4 * margin) / 3
+        let itemWH = (UIScreen.mainScreen().bounds.width - 4 * margin - 1) / 3
         
         itemSize = CGSize(width: itemWH, height: itemWH)
         minimumLineSpacing = margin
