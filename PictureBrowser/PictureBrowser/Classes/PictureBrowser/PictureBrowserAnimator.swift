@@ -14,11 +14,17 @@ protocol PresentedProtocol : class {
     func getEndRect(indexPath : NSIndexPath) -> CGRect
 }
 
+protocol DismissProtocol : class {
+    func getImageView() -> UIImageView
+    func getIndexPath() -> NSIndexPath
+}
+
 class PictureBrowserAnimator: NSObject {
     var isPresented : Bool = false
     var indexPath : NSIndexPath?
     
     weak var presentedDelegate : PresentedProtocol?
+    weak var dismissDelegate : DismissProtocol?
 }
 
 
@@ -86,14 +92,37 @@ extension PictureBrowserAnimator : UIViewControllerAnimatedTransitioning {
             
         }else
         {
+            guard let dismissDelegate = dismissDelegate, presentedDelegate = presentedDelegate else {
+                return
+            }
+
             // 1.取出消失的View
             let dismissView = transitionContext.viewForKey(UITransitionContextFromViewKey)
             
+            
             // 2.执行动画
-            let duration = transitionDuration(transitionContext)
-            UIView.animateWithDuration(duration, animations: {
-                () -> Void in
-                dismissView?.alpha = 0.0
+            // 2.1 获取执行动画的 ImageView
+            let imageView = dismissDelegate.getImageView()
+            transitionContext.containerView()?.addSubview(imageView)
+            
+            // 2.2 取出indexPath
+            let indexPath = dismissDelegate.getIndexPath()
+            
+            // 2.3 获取结束位置
+            let endRect = presentedDelegate.getStartRect(indexPath)
+            
+            dismissView?.alpha = endRect == CGRectZero ? 1.0 : 0.0
+            
+            // 2.4 执行动画
+            UIView.animateWithDuration(transitionDuration(transitionContext), animations: { () -> Void in
+                if endRect == CGRectZero {
+                    imageView.removeFromSuperview()
+                    dismissView?.alpha = 0.0
+                }else
+                {
+                    imageView.frame = endRect
+                }
+                
                 }, completion: { (_) -> Void in
                     dismissView?.removeFromSuperview()
                     transitionContext.completeTransition(true)

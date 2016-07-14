@@ -10,7 +10,7 @@ import UIKit
 import AFNetworking
 
 
-private let reuseIdentifier = "cellID"
+private let reuseIdentifier = "Cell"
 
 class HomeCollectionViewController: UICollectionViewController
 {
@@ -77,7 +77,7 @@ extension NSMutableArray {
 
 extension HomeCollectionViewController {
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return shops.count
+        return self.shops.count
     }
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -106,12 +106,13 @@ extension HomeCollectionViewController {
         pictureBrowser.shops = shops
         pictureBrowserAnimator.indexPath = indexPath
         pictureBrowserAnimator.presentedDelegate = self
+        pictureBrowserAnimator.dismissDelegate = pictureBrowser
         
-//        pictureBrowser.modalTransitionStyle = .PartialCurl
+//  3      pictureBrowser.modalTransitionStyle = .PartialCurl
         pictureBrowser.modalPresentationStyle = .Custom
         pictureBrowser.transitioningDelegate = pictureBrowserAnimator
     
-        // 3. 弹出控制器
+        // 4. 弹出控制器
         presentViewController(pictureBrowser, animated: true, completion: nil)
         
     }
@@ -135,7 +136,9 @@ extension HomeCollectionViewController : PresentedProtocol {
     
     func getStartRect(indexPath: NSIndexPath) -> CGRect {
         
-        let cell = collectionView?.cellForItemAtIndexPath(indexPath) as! HomeViewCell
+        guard let cell = collectionView?.cellForItemAtIndexPath(indexPath) as?  HomeViewCell else {
+            return CGRectZero
+        }
         
         // 将cell的frame转换成所有屏幕的frame
         let startRect = collectionView!.convertRect(cell.frame, toCoordinateSpace: UIApplication.sharedApplication().keyWindow!)

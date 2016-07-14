@@ -15,7 +15,6 @@ class PictureBrowserController: UIViewController {
     let pictureBrowseCellID = "pictureBrowseCellID"
     
     
-//    lazy var collectionView : UICollectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: pictureBrowserLayout())
     lazy var collectionView : UICollectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: pictureBrowserLayout())
 
     lazy var closeBtn : UIButton = UIButton()
@@ -25,7 +24,6 @@ class PictureBrowserController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        view.backgroundColor = UIColor.purpleColor()
 
         view.frame.size.width += 15
         // 1.设置UI界面
@@ -127,6 +125,42 @@ extension PictureBrowserController :UICollectionViewDataSource, UICollectionView
         closeBtnClick()
     }
 }
+
+// MARK:- 实现dismissProtocol的代理方法
+extension PictureBrowserController : DismissProtocol {
+    
+    func getImageView() -> UIImageView {
+        // 1. 创建UIImageView对象
+        let imageView = UIImageView()
+        
+        // 2. 设置imageView的image
+        let cell = collectionView.visibleCells().first as! PictureBrowserViewCell
+	imageView.image = cell.imageView.image
+        
+        // 3. 设置imageView的frame
+        imageView.frame = cell.imageView.frame
+        
+        // 4. 设置imageView的属性
+        imageView.contentMode = .ScaleAspectFill
+        imageView.clipsToBounds = true
+        
+        return imageView
+    }
+    
+    func getIndexPath() -> NSIndexPath {
+        // 获取正在显示的Cell
+        let cell = collectionView.visibleCells().first as! PictureBrowserViewCell
+        
+        return  collectionView.indexPathForCell(cell)!
+    }
+}
+
+
+
+
+
+
+
 
 
 

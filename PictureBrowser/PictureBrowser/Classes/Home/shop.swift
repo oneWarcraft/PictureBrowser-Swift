@@ -6,7 +6,7 @@
 //  Copyright © 2016年 WangJiwei. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class Shop: NSObject {
     var q_pic_url : String = ""
