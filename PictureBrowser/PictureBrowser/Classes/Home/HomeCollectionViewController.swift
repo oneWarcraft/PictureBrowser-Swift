@@ -19,8 +19,7 @@ class HomeCollectionViewController: UICollectionViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadData()
-   
+        loadData(0)
     }
 
 
@@ -28,9 +27,9 @@ class HomeCollectionViewController: UICollectionViewController
 
 extension HomeCollectionViewController
 {
-    func loadData() {
+    func loadData(offset: Int) {
         // 发送网络请求
-        NetworkTools.shareInstance.loadHomeData { (resultArray, error) in
+        NetworkTools.shareInstance.loadHomeData(offset) { (resultArray, error) in
             // 1. 错误校验
             if error != nil {
                 return
@@ -84,6 +83,10 @@ extension HomeCollectionViewController {
 //        cell.backgroundColor = UIColor.redColor()
         
         cell.shop = shops[indexPath.row]
+        
+        if indexPath.row == shops.count - 1 {
+            loadData(shops.count)
+        }
         
         return cell
     }
